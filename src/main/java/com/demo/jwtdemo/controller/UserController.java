@@ -30,12 +30,17 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public void register(@RequestBody UserDTO userDTO) {
+    public ResponseEntity register(@RequestBody UserDTO userDTO) {
         String encryptedPassword = bCryptPasswordEncoder.encode(userDTO.getPassword());
         User user = new User();
         user.setUsername(userDTO.getUsername());
         user.setPassword(encryptedPassword);
+        try {
             userRepository.save(user);
+        }catch(MongoWriteException e){
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PostMapping("/login")

@@ -5,9 +5,8 @@ import com.demo.jwtdemo.dto.UserDTO;
 import com.demo.jwtdemo.model.User;
 import com.demo.jwtdemo.repository.UserRepository;
 import com.demo.jwtdemo.util.JWTUtil;
+import com.mongodb.MongoWriteException;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -36,7 +35,7 @@ public class UserController {
         User user = new User();
         user.setUsername(userDTO.getUsername());
         user.setPassword(encryptedPassword);
-        userRepository.save(user);
+            userRepository.save(user);
     }
 
     @PostMapping("/login")

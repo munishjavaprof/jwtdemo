@@ -37,7 +37,7 @@ public class UserController {
         user.setPassword(encryptedPassword);
         try {
             userRepository.save(user);
-        }catch(MongoWriteException e){
+        }catch(Exception e){
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
         return ResponseEntity.status(HttpStatus.CREATED).build();
